@@ -155,19 +155,16 @@ const useStyles = pxStyles((theme) => ({
     flexDirection: 'row',
     marginBottom: 10,
     alignItems: 'center',
+    justifyContent: 'space-between'
   },
   sortButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     paddingVertical: 2,
-    marginEnd: 10,
-    borderRadius: 222,
-    borderWidth: 1,
     borderColor: theme.secondary
   },
   sortText: {
-    marginRight: 5,
     fontSize: 16,
     color: theme.secondary,
     fontWeight: 'bold',
