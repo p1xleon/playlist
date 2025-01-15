@@ -1,4 +1,4 @@
-import { Text, View, FlatList, Image, Pressable, TouchableOpacity } from 'react-native';
+import { Text, View, FlatList, Image, Pressable, TouchableOpacity, Alert } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 
 //firebase
@@ -62,7 +62,7 @@ const Lists = ({ navigation }: ListsProps) => {
           }));
 
           const orderRoutes = listRoutes.sort((a, b) => {
-            const order = ['backlog', 'playing', 'wishlist', 'completed'];
+            const order = ['backlog', 'playing', 'wishlist', 'completed', 'dropped'];
             return order.indexOf(a.key) - order.indexOf(b.key);
           });
 
@@ -129,7 +129,7 @@ const Lists = ({ navigation }: ListsProps) => {
           <View style={styles.listInfo}>
             <View style={{ flexDirection: 'row' }}>
               <Icon name={listIcons[route.key]} size={24} color={colors} />
-              <Text style={[styles.title, { marginLeft: 10, color: colors }]}>{listDesc[route.key]}</Text>
+              <Text style={[styles.title, { fontSize: 18, marginLeft: 7, color: colors }]}>{listDesc[route.key]}</Text>
             </View>
             <Text style={styles.count}>{list?.gameCount || null}</Text>
           </View>
@@ -160,7 +160,7 @@ const Lists = ({ navigation }: ListsProps) => {
                     setSourceList(route.key);
                     sheetRef.current?.present();
                   }}>
-                    <Icon name="dots-vertical" color='#fff' size={24} style={[styles.icon, { marginLeft: 10 }]} />
+                    <Icon name="dots-vertical" color='#fff' size={24} style={[styles.icon, { paddingBottom: 10, paddingLeft: 10, paddingRight: 1}]} />
                   </Pressable>
                 </TouchableOpacity>
               </View>
@@ -261,6 +261,7 @@ const useStyles = pxStyles((theme) => ({
   },
   gameDetails: {
     flex: 1,
+    marginTop: -5
   },
   title: {
     color: theme.primary,
@@ -276,15 +277,13 @@ const useStyles = pxStyles((theme) => ({
     backgroundColor: theme.background,
   },
   tab: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    paddingHorizontal: -20 //fix tab bar label text truncating
   },
   listInfo: {
     flexDirection: 'row',
     margin: 10,
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   label: {
     fontWeight: '900',
@@ -302,7 +301,6 @@ const useStyles = pxStyles((theme) => ({
   },
   actionListItem: {
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 10,
     padding: 10,
   },
