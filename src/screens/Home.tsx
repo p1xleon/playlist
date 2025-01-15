@@ -31,7 +31,7 @@ const Home = ({ navigation }: HomeProps) => {
   const userId = auth().currentUser?.uid;
 
   //list order for sorting
-  const listOrder = ['backlog', 'playlist', 'completed', 'wishlist'];
+  const listOrder = ['backlog', 'playlist', 'completed', 'wishlist', 'dropped'];
 
   useEffect(() => {
     if (userId) {
