@@ -32,6 +32,7 @@ const Header = ({ title, children, style }: HeaderProps) => {
 
 const useStyles = pxStyles((theme) => ({
     container: {
+        backgroundColor: theme.background,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

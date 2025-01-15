@@ -32,12 +32,12 @@ export const signUp = async ({ email, password, username }: SignUpProps): Promis
         const userCredentials = await auth().createUserWithEmailAndPassword(email, password);
         if (userCredentials.user) {
             await userCredentials.user.updateProfile({ displayName: username });
-            console.log('User signed up', userCredentials.user?.email);
+            // console.log('User signed up', userCredentials.user?.email);
             await createDefaultLists(userCredentials.user?.uid);
         }
         return userCredentials.user;
     } catch (error) {
-        console.log('Error signing up user', error);
+        // console.log('Error signing up user', error);
         throw error;
     }
 };
@@ -47,10 +47,10 @@ export const signUp = async ({ email, password, username }: SignUpProps): Promis
 export const logIn = async ({ email, password }: LogInProps): Promise<FirebaseAuthTypes.User | null> => {
     try {
         const userCredentials = await auth().signInWithEmailAndPassword(email, password);
-        console.log('User logged in', userCredentials.user?.email)
+        // console.log('User logged in', userCredentials.user?.email)
         return userCredentials.user;
     } catch (error) {
-        console.log('Error logging in user', error);
+        // console.log('Error logging in user', error);
         throw error;
     }
 };
@@ -59,9 +59,9 @@ export const logIn = async ({ email, password }: LogInProps): Promise<FirebaseAu
 export const signOut = async (): Promise<void> => {
     try {
         await auth().signOut();
-        console.log('User signed out');
+        // console.log('User signed out');
     } catch (error) {
-        console.error('Error signing out', error);
+        // console.error('Error signing out', error);
         throw error;
     }
 };
@@ -78,13 +78,13 @@ export const getCurrentUser = (): { email: string; username: string } | null => 
     return null;
 };
 
-//create the default lists when the user signs up (backlog, playlist, wishlist, completed)
+//create the default lists when the user signs up (backlog, playlist, wishlist, completed, dropped)
 const createDefaultLists = async (userId: string | undefined) => {
     if (!userId) {
         throw new Error('User ID is undefined');
     }
 
-    const defaultLists = ['backlog', 'playlist', 'wishlist', 'completed'];
+    const defaultLists = ['backlog', 'playlist', 'wishlist', 'completed', 'dropped'];
 
     const batch = firestore().batch();
 
@@ -120,12 +120,12 @@ export const addGameToList = async (userId: string, listName: string, game: Game
             await gameRef.update({
                 games: firestore.FieldValue.arrayUnion(game),
             });
-            console.log('Game added to list:', listName);
+            // console.log('Game added to list:', listName);
         } else {
-            console.log('Game already exists in the collection.');
+            // console.log('Game already exists in the collection.');
         }
     } catch (error) {
-        console.error('Error adding game to list:', error);
+        // console.error('Error adding game to list:', error);
         throw new Error('Failed to add game to list. Please try again.');
     }
 };
@@ -145,15 +145,15 @@ export const deleteGameFromList = async (userId: string, listName: string, gameI
                 await listRef.doc(listName).update({
                     games: firestore.FieldValue.arrayRemove(gameToRemove)
                 });
-                console.log('Deleted game from list', listName);
+                // console.log('Deleted game from list', listName);
             } else {
-                console.log('Game not found in the list');
+                // console.log('Game not found in the list');
             }
         } else {
-            console.log('List data not found');
+            // console.log('List data not found');
         }
     } catch (error) {
-        console.error('Error deleting game', error);
+        // console.error('Error deleting game', error);
         throw new Error("Failed to delete game from list");
     }
 };
@@ -180,9 +180,9 @@ export const moveGameToList = async (userId: string, sourceList: string, targetL
         await listRef.doc(sourceList).update({ games: updatedSourceGames });
         await listRef.doc(targetList).update({ games: updatedTargetGames });
 
-        console.log('Moved game to list', targetList);
+        // console.log('Moved game to list', targetList);
     } catch (error) {
-        console.error('Error moving game', error);
+        // console.error('Error moving game', error);
         throw new Error("Failed to move game between lists");
     }
 };
@@ -207,7 +207,7 @@ export const getUserLists = (userId: string, callback: (lists: any[]) => void) =
         });
         callback(listsData);
     }, (error) => {
-        console.error('Error fetching user lists:', error);
+        // console.error('Error fetching user lists:', error);
         // Handle error
     });
 };
@@ -226,7 +226,7 @@ export const getGameList = async (userId: string, gameId: number): Promise<strin
         }
         return null;
     } catch (error) {
-        console.error('Error cheking game status', error);
+        // console.error('Error cheking game status', error);
         throw new Error('Error fetching game list status. Please try again');
     }
 };
@@ -245,9 +245,9 @@ export const deleteCollectionGames = async (userId: string) => {
         });
 
         await batch.commit();
-        console.log('Deleted all games from user collection');
+        // console.log('Deleted all games from user collection');
     } catch (error) {
-        console.error('Error deleting all games from collection', error);
+        // console.error('Error deleting all games from collection', error);
         throw new Error("Failed to delete all games from collection");
     }
 };
