@@ -27,8 +27,9 @@ const Changelog = () => {
       <Card>
         <Text style={styles.badgeText}>v1.1</Text>
         <Text style={styles.text}>{'\u25CF'} Added new list - Dropped, for games you have played, but are not your type =(</Text>
+        <Text style={styles.text}>{'\u25CF'} Enhanced filtering in game results for a more refined experience.</Text>
         <Text style={styles.text}>{'\u25CF'} Implemented a cache manager, to keep the cache in check =)</Text>
-        <Text style={styles.text}>{'\u25CF'} </Text>
+        <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
       </Card>
     </ScrollView>
   );
