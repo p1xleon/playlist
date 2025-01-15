@@ -39,7 +39,7 @@ const Login = () => {
     try {
       const { email, password } = values;
       await logIn({ email, password });
-      console.log('User Logged in');
+      // console.log('User Logged in');
       navigation.replace('Tabs');
     } catch (error: any) {
       //handle firebase errors

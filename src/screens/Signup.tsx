@@ -41,7 +41,7 @@ const Signup = () => {
     try {
       const { email, password, username } = values;
       await signUp({ email, password, username });
-      console.log('User registered');
+      // console.log('User registered');
       navigation.replace('Tabs');
     } catch (error: any) {
       // handle Firebase errors

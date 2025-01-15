@@ -86,7 +86,7 @@ const DiscoverCard: React.FC<GameCardProps> = ({ game }) => {
 
     const openGame = () => {
         navigation.dispatch(StackActions.push('GameDetails', { game }));
-        console.log(game.additions_count)
+        // console.log(game.additions_count)
     };
 
     return (

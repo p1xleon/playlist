@@ -161,7 +161,7 @@ export const fetchGamesByPlatforms = async (platform: number) => {
 
 //discover - fetch games based on rawg ordering fields
 export const discoverGames = async (ordering: string) => {
-  console.log(`Fetching games with order: ${ordering}`); // Add this line for debugging
+  // console.log(`Fetching games with order: ${ordering}`);
   const response = await axios.get(`${BASE_URL}/games`, {
     params: {
       key: API_KEY,
@@ -227,7 +227,7 @@ export const fetchPopularGames = async () => {
 
 //discover - fetch genres
 export const fetchGenres = async (ordering: string, genre: string | null) => {
-  console.log(`Fetching games with order: ${ordering} and genre: ${genre}`); // Add this line for debugging
+  // console.log(`Fetching games with order: ${ordering} and genre: ${genre}`);
   const response = await axios.get(`${BASE_URL}/games`, {
     params: {
       key: API_KEY,

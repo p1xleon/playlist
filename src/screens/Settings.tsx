@@ -57,13 +57,9 @@ const Settings = ({ navigation }: SettingsProps) => {
       await signOut();
       // navigation.navigate('Login'); //nav broken, throws payload was not handled by any nav
     } catch (error) {
-      console.error('Error signing out', error);
+      // console.error('Error signing out', error);
       // handle errors
     }
-  };
-
-  const logging = () => {
-    console.log('pressed!');
   };
 
   //function to open app notification settings

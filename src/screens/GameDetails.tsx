@@ -63,7 +63,7 @@ const GameDetails: React.FC = () => {
           const list = await getGameList(userId, game.id);
           setListName(list);
         } catch (error) {
-          console.error('Error fetching game list status', error);
+          // console.error('Error fetching game list status', error);
         }
       }
     };
@@ -117,17 +117,17 @@ const GameDetails: React.FC = () => {
           addedDate: new Date(),
         });
         setListName(selectedList);
-        console.log(`Game added to ${toastText}`);
+        // console.log(`Game added to ${toastText}`);
         //show snackbar
         Snackbar.show({
           text: `Added to ${toastText}`,
           duration: Snackbar.LENGTH_SHORT,
         });
       } else {
-        console.log('User not authenticated');
+        // console.log('User not authenticated');
       }
     } catch (error) {
-      console.error(`Error adding game to ${selectedList}`, error);
+      // console.error(`Error adding game to ${selectedList}`, error);
     } finally {
       sheetRef.current?.dismiss(); // Dismiss the sheet after adding the game
       setSelectedList(null); // Reset the selected list

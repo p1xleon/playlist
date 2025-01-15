@@ -13,9 +13,9 @@ export const clearAppCache = async () => {
       }
     }
 
-    console.log('App cache cleared successfully');
+    // console.log('App cache cleared successfully');
   } catch (error) {
-    console.error('Error clearing app cache:', error);
+    // console.error('Error clearing app cache:', error);
   }
 };
 
@@ -33,9 +33,9 @@ export const autoClearCache = async () => {
     ) {
       await clearAppCache();
       await AsyncStorage.setItem('lastCacheClearTime', now.toString());
-      console.log('Cache cleared on app start');
+      // console.log('Cache cleared on app start');
     }
   } catch (error) {
-    console.error('Error checking/clearing cache:', error);
+    // console.error('Error checking/clearing cache:', error);
   }
 };
