@@ -92,7 +92,7 @@ const Lists = ({ navigation }: ListsProps) => {
           setSelectedGame(null);
         }
       } catch (error) {
-        console.error('Failed to move game', error);
+        // console.error('Failed to move game', error);
       }
     }
   };
@@ -112,7 +112,7 @@ const Lists = ({ navigation }: ListsProps) => {
           setSelectedGame(null);
         }
       } catch (error) {
-        console.error('Failed to delete game', error);
+        // console.error('Failed to delete game', error);
       }
     }
   };
