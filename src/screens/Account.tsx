@@ -28,6 +28,7 @@ const Account = () => {
   const playlistCount = listGameCounts?.['playlist'] || 0;
   const wishlistCount = listGameCounts?.['wishlist'] || 0;
   const completedCount = listGameCounts?.['completed'] || 0;
+  const droppedCount = listGameCounts?.['dropped'] || 0;
 
   return (
     <View style={styles.container}>
@@ -93,6 +94,16 @@ const Account = () => {
                 <View style={styles.strip}>
                   <Icon name={listIcons.completed} size={22} color={listColors.completed} />
                   <Text style={styles.listName}> Completed</Text>
+                </View>
+              </View>
+            </View>            
+            
+            <View style={[styles.listInfo, {justifyContent: 'center'}]}>
+              <View style={styles.badge}>
+                <Text style={styles.count}>{droppedCount}</Text>
+                <View style={styles.strip}>
+                  <Icon name={listIcons.dropped} size={22} color={listColors.dropped} />
+                  <Text style={styles.listName}> Dropped/Ignored</Text>
                 </View>
               </View>
             </View>
