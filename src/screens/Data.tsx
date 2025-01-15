@@ -14,7 +14,7 @@ import {deleteCollectionGames} from '../services/auth/firebase';
 import {pxStyles} from '../theme/useTheme';
 
 //utils
-import {clearAppCache} from '../utils/cachemanager';
+import {clearAppCache} from '../utils/cacheManager';
 
 type DataProps = NativeStackScreenProps<RootStackParamList, 'Data'>;
 
