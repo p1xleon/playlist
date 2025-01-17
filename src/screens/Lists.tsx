@@ -198,7 +198,11 @@ const Lists = ({ navigation }: ListsProps) => {
       />
 
       {selectedGame && (
-        <Sheet ref={sheetRef} title={selectedGame.name}>
+        <Sheet ref={sheetRef} title={selectedGame.name || ''}
+        onDismiss={() => {
+          setSelectedGame(null);
+          setSourceList(null);
+        }}>
           <View style={{ paddingHorizontal: 10 }}>
             <Separator style={{ backgroundColor: '#494949' }} />
             <View>
