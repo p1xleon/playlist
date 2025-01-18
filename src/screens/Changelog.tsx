@@ -31,6 +31,13 @@ const Changelog = () => {
         <Text style={styles.text}>{'\u25CF'} Implemented a cache manager, to keep the cache in check =)</Text>
         <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
       </Card>
+         
+      {/* v1.2 */}
+      <Card>
+        <Text style={styles.badgeText}>v1.2</Text>
+        <Text style={styles.text}>{'\u25CF'} Optimized user lists for better performance</Text>
+        <Text style={styles.text}>{'\u25CF'} User lists action sheet bug fixes</Text>
+      </Card>
     </ScrollView>
   );
 };
