@@ -74,7 +74,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchIcon = "magnify", clearIcon
         onFocus={handleFocus}
         onBlur={handleBlur}
         onChangeText={handleChangeText}
-        placeholder="Search..."
+        placeholder="Search for games"
         placeholderTextColor="#acacac"
         cursorColor='#fff'
         autoFocus={autoFocus}
