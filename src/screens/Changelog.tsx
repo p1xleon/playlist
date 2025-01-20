@@ -37,6 +37,14 @@ const Changelog = () => {
         <Text style={styles.badgeText}>v1.2</Text>
         <Text style={styles.text}>{'\u25CF'} Optimized user lists for better performance</Text>
         <Text style={styles.text}>{'\u25CF'} User lists action sheet bug fixes</Text>
+      </Card>      
+      
+      {/* v1.3 */}
+      <Card>
+        <Text style={styles.badgeText}>v1.3</Text>
+        <Text style={styles.text}>{'\u25CF'} Added new Favorites library</Text>
+        <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
+        <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
       </Card>
     </ScrollView>
   );
