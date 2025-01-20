@@ -20,9 +20,11 @@ const Card = ({ children, style }: CardProps) => {
 const useStyles = pxStyles((theme) => ({
   card: {
     padding: 10,
+    marginHorizontal: 10,
     marginVertical: 3,
     borderRadius: 3,
-
+    backgroundColor: theme.background,
+    elevation: 5,
     justifyContent: 'center',
   },
 }));

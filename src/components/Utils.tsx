@@ -186,7 +186,7 @@ const useStyles = pxStyles((theme) => ({
     fontSize: 18,
     color: theme.primary,
     fontWeight: '900',
-    marginLeft: 25,
+    marginLeft: 20,
   },
   linkGroup: {
     flex: 1,
