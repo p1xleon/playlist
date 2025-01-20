@@ -28,7 +28,7 @@ const About = ({ navigation }: AboutProps) => {
                 <Icon name="cheese" size={IconSize.m} style={styles.icon} />
                 <View>
                     <Text style={styles.superText}>Version</Text>
-                    <Text style={styles.subText}>1.2</Text>
+                    <Text style={styles.subText}>1.3</Text>
                 </View>
             </View>
 
