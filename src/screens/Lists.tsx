@@ -12,6 +12,7 @@ import React, {useEffect, useRef, useState} from 'react';
 //firebase
 import auth from '@react-native-firebase/auth';
 import {
+  addFavorite,
   deleteGameFromList,
   getCurrentUser,
   getUserLists,
@@ -31,7 +32,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //components
 import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import {Loading, OverlayLoader} from '../components/Loading';
+import {Loading} from '../components/Loading';
 import SearchBar from '../components/SearchBar';
 import Sheet, {SheetHandle} from '../components/ActionSheet';
 import Snackbar from 'react-native-snackbar';
@@ -105,7 +106,7 @@ const Lists = ({navigation}: ListsProps) => {
           await moveGameToList(userId, sourceList, targetList, updatedGame);
           sheetRef.current?.dismiss();
           Snackbar.show({
-            text: `Game moved to ${targetList}`,
+            text: `${selectedGame.name} moved to ${targetList}`,
             duration: Snackbar.LENGTH_SHORT,
           });
           setSourceList(null);
@@ -132,7 +133,7 @@ const Lists = ({navigation}: ListsProps) => {
           await deleteGameFromList(userId, sourceList, selectedGame.id);
           sheetRef.current?.dismiss();
           Snackbar.show({
-            text: `Game deleted from ${sourceList}`,
+            text: `${selectedGame.name} deleted from ${sourceList}`,
             duration: Snackbar.LENGTH_SHORT,
           });
           setSourceList(null);
@@ -141,6 +142,30 @@ const Lists = ({navigation}: ListsProps) => {
       } catch (error) {
         Snackbar.show({
           text: 'Failed to delete the game',
+          duration: Snackbar.LENGTH_SHORT,
+        });
+      } finally {
+        setIsProcessing(false);
+      }
+    }
+  };
+
+  const handleFavorite = async () => {
+    if (selectedGame) {
+      setIsProcessing(true);
+      try {
+        if (userId) {
+          await addFavorite(userId, selectedGame);
+          sheetRef.current?.dismiss();
+          Snackbar.show({
+            text: `${selectedGame.name} added to favorites`,
+            duration: Snackbar.LENGTH_SHORT,
+          });
+          setSelectedGame(null);
+        }
+      } catch (error) {
+        Snackbar.show({
+          text: 'Failed to add game to favorites',
           duration: Snackbar.LENGTH_SHORT,
         });
       } finally {
@@ -159,7 +184,11 @@ const Lists = ({navigation}: ListsProps) => {
             navigation.navigate('GameDetails', {game: gameDetails});
           }}>
           <Image
-            source={{uri: game.background_image}}
+            source={{
+              uri:
+                game.background_image ||
+                'https://cdn-icons-png.freepik.com/256/5726/5726517.png?semt=ais_hybrid',
+            }}
             style={{
               width: 50,
               height: 50,
@@ -207,9 +236,9 @@ const Lists = ({navigation}: ListsProps) => {
     const list = lists.find(list => list.id === route.key);
     const colors = listColors[route.key];
     const listData = lists.find(list => list.id === route.key)?.games || [];
-    const sortedGames = listData.sort((a: ReGame,b: ReGame) => {
+    const sortedGames = listData.sort((a: ReGame, b: ReGame) => {
       return new Date(b.addedDate).getTime() - new Date(a.addedDate).getTime();
-    })
+    });
 
     return (
       <View style={styles.container}>
@@ -270,38 +299,63 @@ const Lists = ({navigation}: ListsProps) => {
 
       {selectedGame && (
         <Sheet ref={sheetRef} title={selectedGame.name}>
-          {isProcessing && <OverlayLoader />}
-          <View style={{paddingHorizontal: 10}}>
-            <Separator style={{backgroundColor: '#494949'}} />
-            <View>
-              {lists
-                .filter(list => list.id !== sourceList)
-                .map(list => (
-                  <TouchableOpacity
-                    key={list.id}
-                    disabled={isProcessing}
-                    onPress={() => handleMoveGame(list.id)}
-                    style={[styles.actionListItem, isProcessing && {opacity: 0.5}]} >
-                    <Icon
-                      name={listIcons[list.id] || 'progress-question'}
-                      size={24}
-                      color={listColors[list.id]}
-                    />
-                    <Text style={styles.actionListText}>
-                      <Text style={styles.title}>Move to </Text>
-                      {list.id.charAt(0).toUpperCase() + list.id.slice(1)}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
+          {isProcessing ? (
+            <Loading />
+          ) : (
+            <View style={{paddingHorizontal: 10}}>
+              <Separator style={{backgroundColor: '#494949'}} />
+              <View style={{marginTop: 10}}>
+                {lists
+                  .filter(list => list.id !== sourceList)
+                  .map(list => (
+                    <TouchableOpacity
+                      key={list.id}
+                      disabled={isProcessing}
+                      onPress={() => handleMoveGame(list.id)}
+                      style={[
+                        styles.actionListItem,
+                        isProcessing && {opacity: 0.5},
+                      ]}>
+                      <Icon
+                        name={listIcons[list.id] || 'progress-question'}
+                        size={24}
+                        color={listColors[list.id]}
+                      />
+                      <Text style={styles.actionListText}>
+                        Move to{' '}
+                        {list.id.charAt(0).toUpperCase() + list.id.slice(1)}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+              </View>
+              <Separator style={{backgroundColor: '#494949'}} />
+              <TouchableOpacity
+                style={styles.actionListItem}
+                onPress={handleFavorite}>
+                <Icon name="heart-outline" size={24} color="#ff0000" />
+                <Text
+                  style={[
+                    styles.actionListText,
+                    isProcessing && {opacity: 0.5},
+                  ]}>
+                  Add to Favorites
+                </Text>
+              </TouchableOpacity>
+              <Separator style={{backgroundColor: '#494949'}} />
+              <TouchableOpacity
+                style={styles.actionListItem}
+                onPress={handleDeleteGame}>
+                <Icon name="delete-outline" size={24} color="#f32929" />
+                <Text
+                  style={[
+                    styles.actionListText,
+                    isProcessing && {opacity: 0.5},
+                  ]}>
+                  Delete from Collection
+                </Text>
+              </TouchableOpacity>
             </View>
-            <Separator style={{backgroundColor: '#494949'}} />
-            <TouchableOpacity
-              style={styles.actionListItem}
-              onPress={handleDeleteGame}>
-              <Icon name="delete-outline" size={24} color="#f32929" />
-              <Text style={[styles.actionListText, isProcessing && {opacity: 0.5}]}>Delete from Collection</Text>
-            </TouchableOpacity>
-          </View>
+          )}
         </Sheet>
       )}
     </View>
@@ -346,7 +400,7 @@ const useStyles = pxStyles(theme => ({
   title: {
     color: theme.primary,
     fontSize: 16,
-    fontWeight: '900',
+    fontWeight: '800',
   },
   addedDate: {
     color: theme.secondary,
@@ -381,7 +435,7 @@ const useStyles = pxStyles(theme => ({
   },
   actionListItem: {
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
   },
   actionListText: {

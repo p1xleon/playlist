@@ -24,6 +24,7 @@ import Acknowledgements from '../screens/Acknowledgements';
 import About from '../screens/About';
 import Changelog from '../screens/Changelog';
 import Games from '../screens/Games';
+import Favorites from '../screens/Favorites';
 
 // Types
 import { Franchise, Game } from '../types/Game';
@@ -49,6 +50,7 @@ export type RootStackParamList = {
   Changelog: undefined;
   Games: { tag?: string, tagName?: string, developer?: string, publisher?: string, pubName?: string, devName?: string, genre?: string, genreName?: string, platform?: number, platName?: string };
   Acknowledgements: undefined;
+  Favorites: undefined;
 };
 
 // Initialize QueryClient
@@ -133,13 +135,14 @@ const MainNavigator: React.FC<{ user: FirebaseAuthTypes.User | null }> = ({ user
               <Stack.Screen name="Account" component={Account} />
               <Stack.Screen name="GameDetails" component={GameDetails} options={{ headerShown: false }} />
               <Stack.Screen name="Search" component={Search} options={{ headerShown: false }} />
-              <Stack.Screen name="Collection" component={Collection} options={{headerTitle: ''}} />
+              <Stack.Screen name="Collection" component={Collection} options={{headerTitle: 'Game Collection'}} />
               <Stack.Screen name="Dummy" component={Dummy} options={{ headerShown: false }} />
               <Stack.Screen name="Data" component={Data} options={{headerTitle: 'Data and Storage'}} />
               <Stack.Screen name="Acknowledgements" component={Acknowledgements} />
               <Stack.Screen name="About" component={About} />
               <Stack.Screen name="Changelog" component={Changelog} />
               <Stack.Screen name="Games" component={Games} />
+              <Stack.Screen name="Favorites" component={Favorites} />
             </>
           ) : (
             <>
