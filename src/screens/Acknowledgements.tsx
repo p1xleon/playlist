@@ -89,6 +89,12 @@ const Acknowledgements = ({ navigation }: AcknowledgementsProps) => {
                         <Text style={styles.text}>React Native Firebase</Text>
                         <Icon name="chevron-right" size={24} style={styles.icon} />
                     </TouchableOpacity>
+                </Card>                
+                <Card>
+                    <TouchableOpacity style={styles.link} onPress={() => openLink('https://tanstack.com/')} >
+                        <Text style={styles.text}>Tanstack Query</Text>
+                        <Icon name="chevron-right" size={24} style={styles.icon} />
+                    </TouchableOpacity>
                 </Card>
             </View>
 
