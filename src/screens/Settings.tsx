@@ -5,46 +5,46 @@ import {
   ScrollView,
   Linking,
   Pressable,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import React, { useRef } from 'react';
+import React, {useRef} from 'react';
 
 //navigation
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../routes/Navigator';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../routes/Navigator';
 
 //icons
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { IconSize } from '../utils/constants/enums/iconEnums';
+import {IconSize} from '../utils/constants/enums/iconEnums';
 
 //firebase
 import auth from '@react-native-firebase/auth';
-import { signOut } from '../services/auth/firebase';
+import {signOut} from '../services/auth/firebase';
 
 //components
 import Card from '../components/Card';
-import { Separator, Badge, SettingsLink, RadioGroup } from '../components/Utils';
-import Sheet, { SheetHandle } from '../components/ActionSheet';
-import { SmallLoader } from '../components/Loading';
+import {Separator, Badge, SettingsLink, RadioGroup} from '../components/Utils';
+import Sheet, {SheetHandle} from '../components/ActionSheet';
+import {SmallLoader} from '../components/Loading';
 
 //functions and hooks
-import { useGameCount } from '../hooks/listHooks';
-import { formatDate } from '../utils/dateTime';
-import { useTheme } from '../theme/ThemeContext';
+import {useGameCount} from '../hooks/listHooks';
+import {formatDate} from '../utils/dateTime';
+import {useTheme} from '../theme/ThemeContext';
 
-import { pxStyles } from '../theme/useTheme';
+import {pxStyles} from '../theme/useTheme';
 
 type SettingsProps = NativeStackScreenProps<RootStackParamList, 'Settings'>;
 
 // const sheetRef = useRef<BottomSheetMethods>(null);
 
-const Settings = ({ navigation }: SettingsProps) => {
+const Settings = ({navigation}: SettingsProps) => {
   const styles = useStyles();
 
-  const { totalGames, loading } = useGameCount();
+  const {totalGames, loading} = useGameCount();
   const user = auth().currentUser;
   const userJoinDate = user?.metadata.creationTime;
-  
+
   //actions sheet
   const sheetRef = useRef<SheetHandle>(null);
   const themeActions = () => {
@@ -73,18 +73,16 @@ const Settings = ({ navigation }: SettingsProps) => {
     ]);
   };
 
-
   //radio button for theme
-  const { setCurrentTheme, currentTheme } = useTheme();
+  const {setCurrentTheme, currentTheme} = useTheme();
   const themeOptions: Option[] = [
-    { label: 'System Default', value: 'systemTheme' },
-    { label: 'Light', value: 'light' },
-    { label: 'Dark', value: 'dark' },
-  ]
+    {label: 'System Default', value: 'systemTheme'},
+    {label: 'Light', value: 'light'},
+    {label: 'Dark', value: 'dark'},
+  ];
   const handleThemeOption = (value: string) => {
     setCurrentTheme(value);
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -92,7 +90,7 @@ const Settings = ({ navigation }: SettingsProps) => {
       <ScrollView>
         <View>
           {/* profile card */}
-          <Card>
+          <Card style={styles.outline}>
             {/* profile info */}
             <View style={styles.cardBox}>
               {/* <Image
@@ -109,40 +107,57 @@ const Settings = ({ navigation }: SettingsProps) => {
             {/* profile badges */}
             <View style={styles.cardBox}>
               <Badge>
-                <Text style={styles.text}>{userJoinDate ? formatDate(userJoinDate) : (<SmallLoader />)}</Text>
+                <Text style={styles.text}>
+                  {userJoinDate ? formatDate(userJoinDate) : <SmallLoader />}
+                </Text>
               </Badge>
               <Badge>
-                <TouchableOpacity onPress={() => navigation.navigate('Collection')}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Collection')}>
                   <Text style={styles.text}>
-                    {totalGames ? `${totalGames} Games` : (<SmallLoader />)}
+                    {totalGames ? `${totalGames} Games` : <SmallLoader />}
                   </Text>
                 </TouchableOpacity>
               </Badge>
             </View>
           </Card>
 
-
-          <View style={{ marginVertical: 15 }}>
+          <View style={styles.outline}>
             <View style={styles.category}>
               {/* account */}
               {/* <Text style={styles.categoryText}>Account</Text> */}
               <Card>
                 <SettingsLink
-                  onPress={() => navigation.navigate('Account')} iconName="account" title="Account" />
+                  onPress={() => navigation.navigate('Account')}
+                  iconName="account"
+                  title="Account"
+                />
               </Card>
               <Card>
                 <SettingsLink
-                  onPress={() => navigation.navigate('Collection')} iconName="hexagon-multiple" title="Game Collection" />
+                  onPress={() => navigation.navigate('Collection')}
+                  iconName="hexagon-multiple"
+                  title="Game Collection"
+                />
+              </Card>
+              <Card>
+                <SettingsLink
+                  onPress={() => navigation.navigate('Favorites')}
+                  iconName="heart"
+                  title="Favorite Games"
+                />
               </Card>
             </View>
-
 
             <View style={styles.category}>
               {/* data */}
               {/* <Text style={styles.categoryText}>Data and Storage</Text> */}
               <Card>
                 <SettingsLink
-                  onPress={() => navigation.navigate('Data')} iconName="chart-donut" title="Data and Storage" />
+                  onPress={() => navigation.navigate('Data')}
+                  iconName="chart-donut"
+                  title="Data and Storage"
+                />
               </Card>
             </View>
 
@@ -150,7 +165,11 @@ const Settings = ({ navigation }: SettingsProps) => {
               {/* <Text style={styles.categoryText}>Preferences</Text> */}
               {/* theme */}
               <Card>
-                <SettingsLink onPress={themeActions} iconName="palette" title="Theme" />
+                <SettingsLink
+                  onPress={themeActions}
+                  iconName="palette"
+                  title="Theme"
+                />
               </Card>
 
               {/* notifications */}
@@ -168,39 +187,63 @@ const Settings = ({ navigation }: SettingsProps) => {
 
             {/* about */}
             <Card>
-              <SettingsLink onPress={() => navigation.navigate('About')} iconName="information" title="About" />
-            </Card>            
+              <SettingsLink
+                onPress={() => navigation.navigate('About')}
+                iconName="information"
+                title="About"
+              />
+            </Card>
 
             {/* logOut */}
             <Card>
               <Pressable onPress={handleSignOut}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', padding: 2 }}>
-                  <Icon name="logout-variant" size={IconSize.m} color="#ff0000" />
-                  <Text style={[styles.aboutText, styles.logOutText]}>Log Out</Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 2,
+                  }}>
+                  <Icon
+                    name="logout-variant"
+                    size={IconSize.m}
+                    color="#ff0000"
+                  />
+                  <Text style={[styles.aboutText, styles.logOutText]}>
+                    Log Out
+                  </Text>
                 </View>
               </Pressable>
             </Card>
-
           </View>
         </View>
       </ScrollView>
 
-      <Sheet ref={sheetRef} title='Choose Theme'>
+      <Sheet ref={sheetRef} title="Choose Theme">
         <View>
-          <Separator style={{ marginHorizontal: 10 }} />
-          <RadioGroup options={themeOptions} selectedOption={currentTheme} onChange={handleThemeOption} />
+          <Separator style={{marginHorizontal: 10}} />
+          <RadioGroup
+            options={themeOptions}
+            selectedOption={currentTheme}
+            onChange={handleThemeOption}
+          />
         </View>
       </Sheet>
-
     </SafeAreaView>
   );
 };
 
-const useStyles = pxStyles((theme) => ({
+const useStyles = pxStyles(theme => ({
   container: {
     flex: 1,
     backgroundColor: theme.background,
-    paddingVertical: 10
+    paddingVertical: 10,
+  },
+  outline: {
+    marginVertical: 10,
+    borderWidth: 2,
+    borderColor: '#7d7d7d',
+    borderRadius: 5,
+    marginHorizontal: 12,
   },
   text: {
     color: theme.background,
@@ -214,7 +257,7 @@ const useStyles = pxStyles((theme) => ({
     fontWeight: '900',
     fontSize: 16,
     marginLeft: 10,
-    marginBottom: 3
+    marginBottom: 3,
   },
   cardBox: {
     flex: 1,
@@ -232,7 +275,7 @@ const useStyles = pxStyles((theme) => ({
     fontSize: 32,
     color: theme.primary,
     fontWeight: 'bold',
-    marginBottom: 10
+    marginBottom: 10,
   },
   aboutText: {
     fontSize: 18,
@@ -241,7 +284,7 @@ const useStyles = pxStyles((theme) => ({
   },
   logOutText: {
     color: '#ff0000',
-    marginLeft: 15,
+    marginLeft: 25,
   },
 }));
 

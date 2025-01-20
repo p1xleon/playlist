@@ -43,7 +43,7 @@ const Carousel: React.FC<CarouselProps> = ({ games }) => {
     };
     const renderItem = ({ item }: { item: ReGame }) => (
         <View style={styles.gameItem}>
-            <Image source={{ uri: item.background_image }} style={{ flex: 1, resizeMode: 'cover', borderRadius: 5 }} />
+            <Image source={{ uri: item.background_image || 'https://cdn-icons-png.freepik.com/256/5726/5726517.png?semt=ais_hybrid' }} style={{ flex: 1, resizeMode: 'cover', borderRadius: 5 }} />
             <TouchableOpacity onPress={() => handleGamePress(item)}
             >
                 <View style={{ marginVertical: 5 }}>

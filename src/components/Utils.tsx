@@ -160,8 +160,9 @@ const useStyles = pxStyles((theme) => ({
   separator: {
     height: 1,
     backgroundColor: '#000000',
-    marginVertical: 10,
+    // marginVertical: 10,
     borderRadius: 5,
+    marginHorizontal: 5
   },
 
   //badge
@@ -182,10 +183,10 @@ const useStyles = pxStyles((theme) => ({
     // justifyContent: 'space-between'
   },
   linkText: {
-    fontSize: 16,
+    fontSize: 18,
     color: theme.primary,
     fontWeight: '900',
-    marginLeft: 15,
+    marginLeft: 25,
   },
   linkGroup: {
     flex: 1,

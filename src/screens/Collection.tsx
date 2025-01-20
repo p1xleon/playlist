@@ -17,6 +17,7 @@ import SearchBar from '../components/SearchBar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 import {pxStyles} from '../theme/useTheme';
+import {Loading} from '../components/Loading';
 
 type CollectionProps = NativeStackScreenProps<RootStackParamList, 'Collection'>;
 
@@ -71,17 +72,20 @@ const Collection = ({navigation}: CollectionProps) => {
   };
 
   const sortedGames = sortGames(allGames);
-
+  if (loading) {
+    return <Loading />;
+  }
+  
   return (
     <View style={styles.container}>
       {/* <FloatBack onPress={() => navigation.goBack()}/> */}
-      <View style={{paddingHorizontal: 10}}>
+      {/* <View style={{paddingHorizontal: 10}}>
         <SearchBar />
-      </View>
+      </View> */}
 
       <View style={styles.header}>
-        <Text style={[styles.title, {fontSize: 22}]}>Game Collection</Text>
-        <Text style={styles.count}>{allGames.length} Games</Text>
+        <Text style={[styles.title, {fontSize: 22}]}>All Games</Text>
+        <Text style={styles.count}>{allGames.length} Titles</Text>
       </View>
 
       <TouchableOpacity style={styles.sortButton} onPress={toggleSortCriteria}>
@@ -139,6 +143,8 @@ const useStyles = pxStyles(theme => ({
   },
   count: {
     fontSize: 18,
+    color: theme.primary,
+    fontWeight: '800',
   },
   gameCard: {
     flexDirection: 'row',

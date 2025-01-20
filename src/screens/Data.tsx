@@ -15,6 +15,7 @@ import {pxStyles} from '../theme/useTheme';
 
 //utils
 import {clearAppCache} from '../utils/cacheManager';
+import Snackbar from 'react-native-snackbar';
 
 type DataProps = NativeStackScreenProps<RootStackParamList, 'Data'>;
 
@@ -56,9 +57,38 @@ const Data = ({navigation}: DataProps) => {
     Linking.openSettings();
   };
 
+  const cacheClearNotif = () => {
+    clearAppCache();
+    Snackbar.show({
+      text: `Cleared Application Cache`,
+      duration: Snackbar.LENGTH_SHORT,
+    });
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
+
+        <View style={styles.card}>
+          <Text style={styles.title}>Clear Cache</Text>
+          <Text style={styles.text}>
+            Clear application cache.
+          </Text>
+          <TouchableOpacity style={styles.links} onPress={cacheClearNotif}>
+            <Text style={styles.linkText}>Clear Cache</Text>
+            <Icon name="database-remove-outline" color="tomato" size={24} />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.title}>Open System Settings</Text>
+          <Text style={styles.text}>Go to the applications System Settings.</Text>
+          <TouchableOpacity style={styles.links} onPress={openStorageSettings}>
+            <Text style={styles.linkText}>Open Settings</Text>
+            <Icon name="cog-outline" color="tomato" size={24} />
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.card}>
           <Text style={styles.title}>Delete Games Collection</Text>
           <Text style={styles.text}>
@@ -69,31 +99,8 @@ const Data = ({navigation}: DataProps) => {
             All the games you added will be lost forever.
           </Text>
           <TouchableOpacity style={styles.links} onPress={handleDeleteAllGames}>
-            <Text style={styles.linkText}>Delete Everything</Text>
+            <Text style={[styles.linkText, { color: 'tomato' }]}>Delete Everything</Text>
             <Icon name="delete-outline" color="tomato" size={24} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.title}>Clear Cache</Text>
-          <Text style={styles.text}>
-            The app size may become too big if the cache is not cleared.
-          </Text>
-          <Text style={styles.text}>
-            Go to Storage & Cache and tap Clear Cache to clear the app cache.
-          </Text>
-          <TouchableOpacity style={styles.links} onPress={clearAppCache}>
-            <Text style={styles.linkText}>Clear Cache with RNFS</Text>
-            <Icon name="database-remove-outline" color="tomato" size={24} />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.title}>Open System Settings</Text>
-          <Text style={styles.text}>Go to the apps System Settings.</Text>
-          <TouchableOpacity style={styles.links} onPress={openStorageSettings}>
-            <Text style={styles.linkText}>Open Settings</Text>
-            <Icon name="cog-outline" color="tomato" size={24} />
           </TouchableOpacity>
         </View>
       </View>
