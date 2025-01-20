@@ -42,8 +42,7 @@ const Changelog = () => {
       {/* v1.3 */}
       <Card>
         <Text style={styles.badgeText}>v1.3</Text>
-        <Text style={styles.text}>{'\u25CF'} Added new Favorites library</Text>
-        <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
+        <Text style={styles.text}>{'\u25CF'} Added new Favorites library. Add games as favorites through lists screen</Text>
         <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
       </Card>
     </ScrollView>
