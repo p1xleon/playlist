@@ -26,25 +26,26 @@ const Changelog = () => {
       {/* v1.1 */}
       <Card>
         <Text style={styles.badgeText}>v1.1</Text>
-        <Text style={styles.text}>{'\u25CF'} Added new list - Dropped, for games you have played, but are not your type =(</Text>
-        <Text style={styles.text}>{'\u25CF'} Enhanced filtering in game results for a more refined experience.</Text>
-        <Text style={styles.text}>{'\u25CF'} Implemented a cache manager, to keep the cache in check =)</Text>
-        <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
+        <Text style={styles.text}>{'\u25CF'} Introduced a new "Dropped" list for games you've played but didn't enjoy.</Text>
+        <Text style={styles.text}>{'\u25CF'} Improved game result filtering for a more refined user experience.</Text>
+        <Text style={styles.text}>{'\u25CF'} Implemented a cache management system to optimize app performance.</Text>
+        <Text style={styles.text}>{'\u25CF'} Various minor UI improvements.</Text>
       </Card>
-         
-      {/* v1.2 */}
+
+      {/* v1.1 */}
       <Card>
         <Text style={styles.badgeText}>v1.2</Text>
-        <Text style={styles.text}>{'\u25CF'} Optimized user lists for better performance</Text>
-        <Text style={styles.text}>{'\u25CF'} User lists action sheet bug fixes</Text>
-      </Card>      
-      
+        <Text style={styles.text}>{'\u25CF'} Optimized user lists for enhanced performance.</Text>
+        <Text style={styles.text}>{'\u25CF'} Resolved bugs in the user lists action sheet.</Text>
+      </Card>
+
       {/* v1.3 */}
       <Card>
         <Text style={styles.badgeText}>v1.3</Text>
-        <Text style={styles.text}>{'\u25CF'} Added new Favorites library. Add games as favorites through lists screen</Text>
-        <Text style={styles.text}>{'\u25CF'} Minor UI changes</Text>
+        <Text style={styles.text}>{'\u25CF'} Introduced the "Favorites" library, allowing users to add games as favorites from the lists screen.</Text>
+        <Text style={styles.text}>{'\u25CF'} Various minor UI enhancements.</Text>
       </Card>
+
     </ScrollView>
   );
 };
