@@ -28,7 +28,9 @@ export const searchGames = async (query: string) => {
   );
   //filter the search words
   const filteredGames = retaggedGames.filter((game: any) =>
-    EXCLUDED_WORDS.every((word) => !game.name.toLowerCase().includes(word.toLowerCase()))
+    EXCLUDED_WORDS.every(
+      word => !game.name.toLowerCase().includes(word.toLowerCase()),
+    ),
   );
   return filteredGames;
 };
@@ -75,7 +77,7 @@ export const fetchBaseGame = async (gameId: number) => {
   return response.data.results;
 };
 
-//get other games in the series 
+//get other games in the series
 export const fetchSeriesGames = async (gameId: number) => {
   const response = await axios.get(
     `${BASE_URL}/games/${gameId}/game-series?key=${API_KEY}`,
@@ -161,17 +163,23 @@ export const fetchGamesByPlatforms = async (platform: number) => {
 
 //discover - fetch games based on rawg ordering fields
 export const discoverGames = async (ordering: string) => {
-  // console.log(`Fetching games with order: ${ordering}`);
-  const response = await axios.get(`${BASE_URL}/games`, {
-    params: {
-      key: API_KEY,
-      ordering,
-    },
-  });
-  const filteredGames = response.data.results.filter((game: any) =>
-    game.tags.every((tag: any) => !EXCLUDED_TAGS.includes(tag.name)),
-  );
-  return filteredGames;
+  try {
+    // console.log(`Fetching games with order: ${ordering}`);
+    const response = await axios.get(`${BASE_URL}/games`, {
+      params: {
+        key: API_KEY,
+        ordering,
+        page_size: 20,
+      },
+    });
+    const filteredGames = response.data.results.filter((game: any) =>
+      game.tags.every((tag: any) => !EXCLUDED_TAGS.includes(tag.name)),
+    );
+    // console.log(filteredGames);
+    return filteredGames;
+  } catch (error) {
+    console.error('Error fetching games to discover', error);
+  }
 };
 
 //get dates from date funtion
@@ -184,7 +192,7 @@ export const fetchUpcomingGames = async () => {
       key: API_KEY,
       dates: `${currentDate},${nextYearDate}`,
       ordering: '-added',
-      page_size: 40,
+      page_size: 20,
     },
   });
   const filteredGames = response.data.results.filter((game: any) =>
@@ -200,7 +208,7 @@ export const fetchNewGames = async () => {
       key: API_KEY,
       dates: `${lastYearDate},${currentDate}`,
       ordering: '-released',
-      page_size: 40,
+      page_size: 20,
     },
   });
   const filteredGames = response.data.results.filter((game: any) =>
@@ -211,18 +219,22 @@ export const fetchNewGames = async () => {
 
 //discover - fetch popular games
 export const fetchPopularGames = async () => {
-  const response = await axios.get(`${BASE_URL}/games`, {
-    params: {
-      key: API_KEY,
-      dates: `${lastYearDate},${currentDate}`,
-      ordering: '-rating',
-      page_size: 40,
-    },
-  });
-  const filteredGames = response.data.results.filter((game: any) =>
-    game.tags.every((tag: any) => !EXCLUDED_TAGS.includes(tag.name)),
-  );
-  return filteredGames;
+  try {
+    const response = await axios.get(`${BASE_URL}/games`, {
+      params: {
+        key: API_KEY,
+        dates: `${lastYearDate},${currentDate}`,
+        ordering: '-rating',
+        page_size: 20,
+      },
+    });
+    const filteredGames = response.data.results.filter((game: any) =>
+      game.tags.every((tag: any) => !EXCLUDED_TAGS.includes(tag.name)),
+    );
+    return filteredGames;
+  } catch (error) {
+    console.error('Error fetching games to discover', error);
+  }
 };
 
 //discover - fetch genres
@@ -233,7 +245,7 @@ export const fetchGenres = async (ordering: string, genre: string | null) => {
       key: API_KEY,
       ordering: '-metacritic', //based on metascores, change to anything else for that ordering
       genres: genre,
-      page_size: 40,
+      page_size: 20,
     },
   });
   const filteredGames = response.data.results.filter((game: any) =>
