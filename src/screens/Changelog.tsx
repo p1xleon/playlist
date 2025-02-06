@@ -45,6 +45,12 @@ const Changelog = () => {
         <Text style={styles.text}>{'\u25CF'} Introduced the "Favorites" library, allowing users to add games as favorites from the lists screen.</Text>
         <Text style={styles.text}>{'\u25CF'} Various minor UI enhancements.</Text>
       </Card>
+      
+      {/* v1.3.5 */}
+      <Card>
+        <Text style={styles.badgeText}>v1.3.5</Text>
+        <Text style={styles.text}>{'\u25CF'} Fixed the Discover feature not working.</Text>
+      </Card>
 
     </ScrollView>
   );
