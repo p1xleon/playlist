@@ -5,6 +5,7 @@ import {Text, View, FlatList, Image, TouchableOpacity} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {ReGame, getUserLists} from '../services/auth/firebase';
 
+//navigation
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../routes/Navigator';
 
@@ -13,11 +14,10 @@ import {listColors, listSort} from '../data/ListMaps';
 import {getRelativeTime} from '../utils/dateTime';
 
 //components
-import SearchBar from '../components/SearchBar';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import {Loading} from '../components/Loading';
 
 import {pxStyles} from '../theme/useTheme';
-import {Loading} from '../components/Loading';
 
 type CollectionProps = NativeStackScreenProps<RootStackParamList, 'Collection'>;
 
@@ -34,7 +34,7 @@ const Collection = ({navigation}: CollectionProps) => {
     const userId = auth().currentUser?.uid;
     if (userId) {
       const unsubscribe = getUserLists(userId, listsData => {
-        // Collect all games into a single array
+        // collect all games into a single array
         const games = listsData.flatMap(list =>
           list.games.map((game: any) => ({
             ...game,
@@ -64,6 +64,7 @@ const Collection = ({navigation}: CollectionProps) => {
       }
     });
   };
+
   const toggleSortCriteria = () => {
     const criteria = ['name', 'addedDate', 'listName'];
     const currentIndex = criteria.indexOf(sortCriteria);
@@ -75,13 +76,9 @@ const Collection = ({navigation}: CollectionProps) => {
   if (loading) {
     return <Loading />;
   }
-  
+
   return (
     <View style={styles.container}>
-      {/* <FloatBack onPress={() => navigation.goBack()}/> */}
-      {/* <View style={{paddingHorizontal: 10}}>
-        <SearchBar />
-      </View> */}
 
       <View style={styles.header}>
         <Text style={[styles.title, {fontSize: 22}]}>All Games</Text>
